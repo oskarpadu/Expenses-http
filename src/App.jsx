@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import Expenses from './components/Expenses/Expenses'
 import NewExpense from './components/NewExpense/NewExpense.jsx'
@@ -26,9 +26,29 @@ const DYMMY_EXPENSES = [
 
 
 function App() {
-  const [expenses, setExpenses] = useState(DYMMY_EXPENSES);
-  
+  const [isFetching, setIsFetching] = useState(false);
+  const [expenses, setExpenses] = useState([]);
 
+  useEffect(() => {
+    
+    const getExpenses = async () => {
+      setIsFetching(true);
+    try { 
+      const response = await fetch('http://localhost:3000/expenses');
+      if (!response.ok) {
+        throw new Error('Failed to fetch expenses data');
+      }
+      const responseData = await response.json();
+      setExpenses(responseData.expenses);
+    } catch (error) {
+      console.error('Error fetching expenses:', error);
+    }
+    setIsFetching(false);
+    }
+    getExpenses();
+    console.log(expenses)
+}, []);
+  
   const addExpenseHandler = (expense) => {
     setExpenses((prevExpenses) => {
     return [expense, ...prevExpenses];
@@ -38,7 +58,7 @@ function App() {
   return (
     <div className='App'>
       <NewExpense onAddExpense={addExpenseHandler} />
-      <Expenses items={expenses} />
+      <Expenses items={expenses} isFetching={isFetching} />
     </div>
   )
 }

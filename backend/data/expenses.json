@@ -1,0 +1,20 @@
+[
+    {
+        "id": "id1",
+        "date": "2023-09-01",
+        "title": "Groceries",
+        "amount": 150.75
+    },
+    {
+        "id": "id2",
+        "date": "2024-06-05",
+        "title": "Electricity Bill",
+        "amount": 60.00
+    },
+    {
+        "id": "id3",
+        "date": "2025-03-10",
+        "title": "Internet Subscription",
+        "amount": 45.50
+    }
+]
